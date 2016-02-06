@@ -51,7 +51,10 @@ am.30to35 <- filter(all.months, route_name == "30" | route_name == "31" | route_
 # recode off route status as factor variable
 am.30to35$OffRouteStatus <- as.factor(am.30to35$OffRouteStatus)
 
-# create proportions of disabled vehicles by route and month
-am.dis <- aggregate(am.30to35$OffRouteStatus,list(am.30to35$route_name),tabulate)
-am.dis$prop <- am.dis$x[,2]/(am.dis$x[,1]+am.dis$x[,2])
-colnames(am.dis) <- c("Route","Status","Proportion")
+# create proportions of disabled vehicles by route
+am.dis.prop <- aggregate(am.30to35$OffRouteStatus,list(am.30to35$route_name),tabulate)
+am.dis.prop$prop <- am.dis.prop$x[,2]/(am.dis.prop$x[,1]+am.dis.prop$x[,2])
+colnames(am.dis.prop) <- c("Route","Status","Proportion")
+
+# subset of just disabled vehicles
+am.dis <- filter(am.30to35, OffRouteStatus == 3)

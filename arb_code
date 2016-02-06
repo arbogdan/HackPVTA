@@ -49,7 +49,7 @@ all.months <- tbl_df(rbind(jan15, feb15, mar15, apr15, may15, jun15, jul15, aug1
 all.months1 <- mutate(all.months, month = month(time))
 
 # Isolate just the 30, 31, 34, 35
-am.30to35 <- filter(all.months, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+am.30to35 <- filter(all.months1, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
 
 # recode off route status as factor variable
 am.30to35$OffRouteStatus <- as.factor(am.30to35$OffRouteStatus)
@@ -61,3 +61,16 @@ colnames(am.dis.prop) <- c("Route","Status","Proportion")
 
 # subset of just disabled vehicles
 am.dis <- filter(am.30to35, OffRouteStatus == 3)
+
+# arrange data by vehicle id and time so that disabled time can be collapsed
+am.time <- am.dis %>%
+  arrange(vehicle_id,time) %>%
+  filter(speed == 0) %>%
+  mutate(time2=ymd_hms(am.time$time)) %>% 
+  mutate(lat.diff= c(0,diff(latitude)), long.diff=c(0,diff(longitude))) %>% 
+  mutate(is.moving=abs(lat.diff)>0.00001&abs(long.diff)>0.00001) %>% 
+  mutate(cum.sum=cumsum(is.moving)) %>% 
+  group_by(vehicle_id,cum.sum) %>% 
+  summarise(time.diff=max(time2)-min(time2),lat=mean(latitude),long=mean(longitude))
+
+

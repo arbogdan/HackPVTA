@@ -47,3 +47,11 @@ all.months <- tbl_df(rbind(jan15, feb15, mar15, apr15, may15, jun15, jul15, aug1
 
 # Isolate just the 30, 31, 34, 35
 am.30to35 <- filter(all.months, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+
+# recode off route status as factor variable
+am.30to35$OffRouteStatus <- as.factor(am.30to35$OffRouteStatus)
+
+# create proportions of disabled vehicles by route and month
+am.dis <- aggregate(am.30to35$OffRouteStatus,list(am.30to35$route_name),tabulate)
+am.dis$prop <- am.dis$x[,2]/(am.dis$x[,1]+am.dis$x[,2])
+colnames(am.dis) <- c("Route","Status","Proportion")

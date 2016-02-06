@@ -46,4 +46,4 @@ all.months <- tbl_df(rbind(jan15, feb15, mar15, apr15, may15, jun15, jul15, aug1
                            nov15, dec15))
 
 # Isolate just the 30, 31, 34, 35
-am.30to45 <- filter(all.months, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+am.30to35 <- filter(all.months, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")

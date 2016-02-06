@@ -66,7 +66,7 @@ am.dis <- filter(am.30to35, OffRouteStatus == 3)
 am.time <- am.dis %>%
   arrange(vehicle_id,time) %>%
   filter(speed == 0) %>%
-  mutate(time2=ymd_hms(am.time$time)) %>% 
+  mutate(time2=ymd_hms(am.dis$time)) %>% 
   mutate(lat.diff= c(0,diff(latitude)), long.diff=c(0,diff(longitude))) %>% 
   mutate(is.moving=abs(lat.diff)>0.00001&abs(long.diff)>0.00001) %>% 
   mutate(cum.sum=cumsum(is.moving)) %>% 

@@ -1,0 +1,44 @@
+#Read in the data
+jan15 <- read.csv("~/Dropbox/UMass Hackathon/January2015.csv", header=FALSE)
+feb15 <- read.csv("~/Dropbox/UMass Hackathon/February2015.csv", header=FALSE)
+mar15 <- read.csv("~/Dropbox/UMass Hackathon/March2015.csv", header=FALSE)
+apr15 <- read.csv("~/Dropbox/UMass Hackathon/April2015.csv", header=FALSE)
+may15 <- read.csv("~/Dropbox/UMass Hackathon/May2015.csv", header=FALSE)
+jun15 <- read.csv("~/Dropbox/UMass Hackathon/June2015.csv", header=FALSE)
+jul15 <- read.csv("~/Dropbox/UMass Hackathon/July2015.csv", header=FALSE)
+aug15 <- read.csv("~/Dropbox/UMass Hackathon/August2015.csv", header=FALSE)
+sept15 <- read.csv("~/Dropbox/UMass Hackathon/September2015.csv", header=FALSE)
+oct15 <- read.csv("~/Dropbox/UMass Hackathon/October2015.csv", header=FALSE)
+nov15 <- read.csv("~/Dropbox/UMass Hackathon/November2015.csv", header=FALSE)
+dec15 <- read.csv("~/Dropbox/UMass Hackathon/December2015.csv", header=FALSE)
+
+#Label Variables
+colnames(jan15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(feb15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(mar15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(apr15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(may15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(jun15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(jul15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(aug15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(sept15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(oct15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(nov15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+colnames(dec15)<-c("vehicle_id","time","latitude","longitude","speed","direction","OffRouteStatus","CommStatus","operational_status","server_time","route","trip","inbound_outbound","deviation","onboard","vehicle_name","run_id","run_name","stop_name","operator_record_id","route_name","stop_report","scheduled_headway","target_headway","alarm_state","GPSStatus","alights","boards","confidence_level","message_type_id","stop_dwell_time","PTV_health_alert","stop_id","stationary_status","OutOfOrderMessageType","stationary_duration","odometer_value","MDTFlags","v39","v40")
+
+#Obtain days of the week from time/date variables
+library(lubridate) #Package for abstracting date/time from time data
+jan15<-mutate(jan15,day=wday(time))
+feb15<-mutate(feb15,day=wday(time))
+mar15<-mutate(mar15,day=wday(time))
+apr15<-mutate(apr15,day=wday(time))
+may15<-mutate(may15,day=wday(time))
+jun15<-mutate(jun15,day=wday(time))
+jul15<-mutate(jul15,day=wday(time))
+aug15<-mutate(aug15,day=wday(time))
+sept15<-mutate(sept15,day=wday(time))
+oct15<-mutate(oct15,day=wday(time))
+nov15<-mutate(nov15,day=wday(time))
+dec15<-mutate(dec15,day=wday(time))
+
+

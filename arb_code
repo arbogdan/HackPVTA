@@ -41,4 +41,16 @@ oct15<-mutate(oct15,day=wday(time))
 nov15<-mutate(nov15,day=wday(time))
 dec15<-mutate(dec15,day=wday(time))
 
-
+# isolate just the 30, 31, 34, 35
+jan15.new <- subset(jan15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+feb15.new <- subset(feb15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+mar15.new <- subset(mar15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+apr15.new <- subset(apr15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+may15.new <- subset(may15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+jun15.new <- subset(jun15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+jul15.new <- subset(jul15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+aug15.new <- subset(aug15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+sept15.new <- subset(sept15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+oct15.new <- subset(oct15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+nov15.new <- subset(nov15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")
+dec15.new <- subset(dec15, route_name == "30" | route_name == "31" | route_name == "34" | route_name == "35")

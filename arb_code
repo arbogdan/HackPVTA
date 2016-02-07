@@ -65,7 +65,7 @@ am.dis <- filter(am.30to35, OffRouteStatus == 3)
 # arrange data by vehicle id and time so that disabled time can be collapsed
 am.time <- am.dis %>%
   arrange(vehicle_id,time) %>%
-  filter(speed == 0) %>%
+  filter(speed == 0, stop_dwell_time == 0) %>% #Added stop_dwell_time exclusion, 17:16 2/6/16
   mutate(time2=ymd_hms(time)) %>% 
   mutate(lat.diff= c(0,diff(latitude)), long.diff=c(0,diff(longitude))) %>% 
   mutate(is.moving=abs(lat.diff)>0.00001&abs(long.diff)>0.00001) %>% 
@@ -73,4 +73,99 @@ am.time <- am.dis %>%
   group_by(vehicle_id,cum.sum) %>% 
   summarise(time.diff=max(time2)-min(time2),lat=mean(latitude),long=mean(longitude))
 
+#Secondary Subset Data
+sub.time<-sample(am.time,25000)
+sub.time<-filter(am.time,time.diff>0)
+#sub.time<-mutate(sub.time,time.diff2=time.diff/60) %>%
+  filter(time.diff2 < 1)
 
+#Obtain Longitude/Latitude cooridinates for bus stops
+bus.stops<-rbind(geocode("Colonial Village (Out) (119), Amherst, MA 01002"), 
+                 geocode("Colonial Village / S East Street (Out) (121)"),
+                 geocode("Amherst Glass (Out) (102)"),
+                 geocode("Amherst Crossing (In) (108), Amherst, MA 01002"),
+                 geocode("Gray Street (Out) (106)"),
+                 geocode("Churchill Street (105), Amherst, MA 01002"),
+                 geocode("Amherst Town Hall (110)"),
+                 geocode("Amherst Post Office (96), Amherst, MA 01002"),
+                 geocode("Pray Street (Out) (93)"),
+                 geocode("Triangle Street (N) (85)"),
+                 geocode("Fearing Street (Out) (82)"),
+                 geocode("Studio Arts Building (72), Amherst, MA 01002"),
+                 geocode("Integrative Learning Center (64), Amherst, MA 01002"),
+                 geocode("GRC (58)"),
+                 geocode("School of Education (43), Amherst, MA 01002"),
+                 geocode("Fairfield Street (42), Amherst, MA 01002"),
+                 geocode("North Village (38), Amherst, MA 01002"),
+                 geocode("Crestview (37)"),
+                 geocode("Puffton Village 2 (35)"),
+                 geocode("Puffton Village 1 (34)"),
+                 geocode("North Amherst (Out) (31)"),
+                 geocode("Townhouse (Out) (29), Amherst, MA 01002"),
+                 geocode("Bioshelter (Out) (19)"),
+                 geocode("Plumtree Road (Out) (18)"),
+                 geocode("Plumtree Road (In) (17), Amherst, MA 01002"),
+                 geocode("Laurenitis Farm Stand (In) (15)"),
+                 geocode("Bagdon Farm (13)"),
+                 geocode("Cliffside (11), Amherst, MA 01002"),
+                 geocode("Silver Lane (10), Amherst, MA 01002"),
+                 geocode("Goten Restaurant (8)"),
+                 geocode("Pioneer Vally Apts. (7)"),
+                 geocode("Garage Road (In) (8005), Amherst, MA 01002"),
+                 geocode("Sunderland Center (S. Deerfield bound) (8009)"),
+                 geocode("Sugarloaf Estates (9)"),
+                 geocode("140 Governors Dr, Amherst, MA 01002"),
+                 geocode("Southwest/University Drive (N) (87), Amherst, MA 01002"),
+                 geocode("Southwest Shelter (78)"),
+                 geocode("WFCR (77)"),
+                 geocode("Visitors Center (75), Amherst, MA 01002"),
+                 geocode("Village Park (S) (53), Amherst, MA 01002"),
+                 geocode("Lot 13 (51), Amherst Ma 01002"),
+                 geocode("Frat/Sort Park (48)"),
+                 geocode("Tilson Farm (Out) (40)"),
+                 geocode("Totman Gym (Out) (47)"),
+                 geocode("Amherst Common (N) (112), Amherst, MA 01002"),
+                 geocode("Memorial Drive (In) (133), Amherst, MA 01002"),
+                 geocode("Columbia Drive (Out) (8011), Amherst, MA 01002"),
+                 geocode("The Brook (Out) (151), Amherst, MA 01002"),
+                 geocode("The Brook (In) (152), Amherst, MA 01002"),
+                 geocode("The Boulders (157)"),
+                 geocode("Southpoint (153)"))
+bus.stops<-rbind(bus.stops,c(-72.537316,42.392400)) #lot12.stop
+bus.stops<-rbind(bus.stops,c(-72.534430,42.392487)) #lot25.stop
+bus.stops<-rbind(bus.stops,c(-72.532613,42.389558)) #mullins.stop
+bus.stops<-rbind(bus.stops,c(-72.532353,42.389158)) #rec.stop
+bus.stops<-rbind(bus.stops,c(-72.531086,42.385981)) #boyden.stop
+bus.stops<-rbind(bus.stops,c(-72.532721,42.377542)) #dallas.stop
+bus.stops<-rbind(bus.stops,c(-72.534051,42.379626)) #lot11.stop
+bus.stops<-rbind(bus.stops,c(-72.532180,42.382283)) #lot21.stop
+bus.stops<-rbind(bus.stops,c(-72.518944,42.383004)) #eastpleasant.stop
+bus.stops<-rbind(bus.stops,c(-72.517658,42.388862)) #butterfield.stop
+bus.stops<-rbind(bus.stops,c(-72.518834,42.389219)) #chadbourne.stop
+bus.stops<-rbind(bus.stops,c(-72.520084,42.391688)) #ohill.stop
+bus.stops<-rbind(bus.stops,c(-72.519225,42.392597)) #ohill2.stop
+bus.stops<-rbind(bus.stops,c(-72.511185,42.394846)) #admissions.stop
+bus.stops<-rbind(bus.stops,c(-72.521729,42.397137)) #sylvan.stop
+
+##############  Interactive OffRouteStatus Map using Leaflet Package  ################
+#---Source code courtesy of Mark Hagemann---#
+#library(leaflet)
+#flint2 <- read.csv("flint_all.csv") %>% 
+#  filter(!is.na(lead.ppb))
+
+# add a color palette
+palBin <- colorNumeric(palette = "YlOrRd", domain=as.numeric(sub.time$time.diff))
+
+# make the basemap
+disp.map<-sub.time %>% 
+         leaflet() %>% 
+         addTiles()
+
+# add data (as circles) to the basemap
+disp.map %>% 
+  addCircleMarkers(lng = ~long, lat = ~lat, radius = 10, 
+                   # color = ~ifelse(lead.ppb >= 15, "maroon", "red"), 
+                   stroke = FALSE, color = "gray20", weight = 1,
+                   fillColor = ~palBin(as.numeric(time.diff)), fillOpacity = 0.6) %>% 
+  addMarkers(lng = ~lon, lat = ~lat, data = x, options=(opacity=0.5)) %>%
+  addLegend(pal = palBin, values = ~as.numeric(time.diff), title = "Disabled?")

@@ -169,3 +169,33 @@ disp.map %>%
                    fillColor = ~palBin(as.numeric(time.diff)), fillOpacity = 0.6) %>% 
   addMarkers(lng = ~lon, lat = ~lat, data = x, options=(opacity=0.5)) %>%
   addLegend(pal = palBin, values = ~as.numeric(time.diff), title = "Disabled?")
+  
+# make graphs of early/late by route and day/month
+op.status <- am.30to35 %>% 
+  filter(OffRouteStatus == 1 & operational_status < 3 & operational_status > 0 )
+library(ggplot2)
+op.status$fop_status <- as.factor(op.status$operational_status)
+op.status$fop_status <- revalue(op.status$fop_status,c("1"="Late", "2"="Early"))
+
+# plot by day of the week
+ggplot(op.status) + geom_bar(aes(x=factor(fop_status),fill=fop_status)) + facet_grid(route ~ day)
+# plot by month
+ggplot(op.status) + geom_bar(aes(x=factor(fop_status),fill=fop_status)) + facet_grid(route ~ month)
+
+## weather data ##
+weather <- read.csv("/Users/katie/Documents/UMass/HackPVTA/weatherdata.csv")
+weather$time2 <- as.Date(mdy_hm(weather$Period))
+weather$month.day <- paste(month(weather$time2),day(weather$time2),sep="-")
+
+am.time$month.day <- paste(am.time$month,am.time$day,sep="-")
+am.time.weather <- left_join(am.time,weather,by="month.day")
+
+# not super efficient code
+am.time.weather$Period <- NULL
+am.time.weather$time2 <- NULL
+am.time.weather$month.day <- NULL
+
+####
+  
+  
+  
